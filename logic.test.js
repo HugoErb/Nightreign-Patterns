@@ -5,6 +5,7 @@ import {
   blankMapImageForMapType,
   filterSpawnPointsForMapType,
   isSpawnPointAvailableForMapType,
+  patternEventDisplay,
   patternMatchesFilters,
   spawnMarkerPosition,
 } from './logic.js';
@@ -62,4 +63,10 @@ test('pattern filters match selected values', () => {
   const pattern = { nightlordId: 'gladius', mapTypeId: 'default', spawnPointId: 'south' };
   assert.equal(patternMatchesFilters(pattern, { nightlordId: 'gladius', mapTypeId: 'default', spawnPointId: 'south' }), true);
   assert.equal(patternMatchesFilters(pattern, { nightlordId: 'adel', mapTypeId: 'default', spawnPointId: 'south' }), false);
+});
+
+test('pattern event display keeps the event day when available', () => {
+  assert.equal(patternEventDisplay({ eventText: 'Day 2 Night Horde' }, ['Night Horde']), 'Day 2 Night Horde');
+  assert.equal(patternEventDisplay({ eventText: 'None' }, ['Night Horde']), 'Aucun événement');
+  assert.equal(patternEventDisplay({}, ['Night Horde']), 'Night Horde');
 });

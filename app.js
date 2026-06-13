@@ -3,6 +3,7 @@ import {
   blankMapImageForMapType,
   filterSpawnPointsForMapType,
   isSpawnPointAvailableForMapType,
+  patternEventDisplay,
   patternMatchesFilters,
   spawnMarkerPosition,
 } from './logic.js';
@@ -106,10 +107,11 @@ function bindStaticEvents() {
     renderAll();
   });
 
-  els.resetButton.addEventListener('click', () => {
+  els.resetButton.addEventListener('click', (event) => {
     state.filters = { nightlordId: '', mapTypeId: 'default', spawnPointId: '' };
     state.displayedPattern = null;
     renderAll();
+    event.currentTarget.blur();
   });
 
   els.zoomIn.addEventListener('click', () => {
@@ -311,6 +313,7 @@ function createPatternCard(pattern) {
     <div class="pattern-spawn">${escapeHtml(spawnName(pattern.spawnPointId) || 'Spawn inconnu')}</div>
     <div class="pattern-event">${escapeHtml(eventNames(pattern.eventIds).join(', ') || 'Aucun événement')}</div>
   `;
+  card.querySelector('.pattern-event').textContent = patternEventDisplay(pattern, eventNames(pattern.eventIds));
   card.addEventListener('click', () => {
     state.displayedPattern = pattern;
     renderAll();

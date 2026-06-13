@@ -58,3 +58,11 @@ export function patternMatchesFilters(pattern, filters) {
     && (!filters.mapTypeId || pattern.mapTypeId === filters.mapTypeId)
     && (!filters.spawnPointId || pattern.spawnPointId === filters.spawnPointId);
 }
+
+export function patternEventDisplay(pattern, fallbackEventNames = []) {
+  if (pattern.eventText) {
+    return pattern.eventText === 'None' ? 'Aucun événement' : pattern.eventText;
+  }
+
+  return fallbackEventNames.length ? fallbackEventNames.join(', ') : 'Aucun événement';
+}
