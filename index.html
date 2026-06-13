@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Nightreign Patterns</title>
+    <link rel="icon" href="public/favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="filters-panel">
+        <header class="panel-header">
+          <h1>Nightreign Patterns</h1>
+          <p><span id="result-count">0</span> résultat(s)</p>
+        </header>
+
+        <section class="field">
+          <span class="field-title">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M15.6 13.5A7 7 0 0 1 6.5 4.4a6.7 6.7 0 1 0 9.1 9.1Z"/></svg>
+            Nightlord
+          </span>
+          <div class="nightlord-select" id="nightlord-select">
+            <button class="nightlord-button" id="nightlord-button" type="button" aria-expanded="false">
+              <span class="unknown-icon" id="selected-nightlord-icon">?</span>
+              <span id="selected-nightlord-name">Inconnu</span>
+            </button>
+            <svg class="select-arrow" viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 7.5 10 12l4.5-4.5H5.5Z"/></svg>
+            <div class="nightlord-menu" id="nightlord-menu" hidden></div>
+          </div>
+        </section>
+
+        <label class="field">
+          <span class="field-title">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 3-5 2v12l5-2 6 2 5-2V3l-5 2-6-2Zm1.2 2.4 3.6 1.2v8l-3.6-1.2v-8Zm-4 1.1 2-.8v7.8l-2 .8V6.5Zm11.6 7-2 .8V6.5l2-.8v7.8Z"/></svg>
+            Type de carte
+          </span>
+          <span class="select-wrap">
+            <select id="map-type-filter"></select>
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 7.5 10 12l4.5-4.5H5.5Z"/></svg>
+          </span>
+        </label>
+
+        <section class="field">
+          <span class="field-title">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M10 2.5a5.5 5.5 0 0 0-5.5 5.5c0 4.1 5.5 9.5 5.5 9.5s5.5-5.4 5.5-9.5A5.5 5.5 0 0 0 10 2.5Zm0 7.5a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z"/></svg>
+            Spawn
+          </span>
+          <div class="spawn-row">
+            <span class="select-wrap">
+              <select id="spawn-filter"></select>
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5.5 7.5 10 12l4.5-4.5H5.5Z"/></svg>
+            </span>
+            <button class="icon-button accent" id="blank-map-button" type="button" title="Carte vierge" aria-label="Afficher la carte vierge">
+              <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 3-5 2v12l5-2 6 2 5-2V3l-5 2-6-2Zm1.2 2.4 3.6 1.2v8l-3.6-1.2v-8Zm-4 1.1 2-.8v7.8l-2 .8V6.5Zm11.6 7-2 .8V6.5l2-.8v7.8Z"/></svg>
+            </button>
+          </div>
+        </section>
+
+        <button class="reset-button" id="reset-button" type="button">Réinitialiser</button>
+      </aside>
+
+      <section class="map-panel">
+        <header class="map-header">
+          <div>
+            <h2>Carte interactive</h2>
+            <p id="map-subtitle">Spawn sélectionné : <span>inconnu / non défini</span></p>
+          </div>
+          <div class="map-controls">
+            <button type="button" id="zoom-out">-</button>
+            <button type="button" id="reset-view">Reset position</button>
+            <button type="button" id="zoom-in">+</button>
+          </div>
+        </header>
+        <div class="map-viewport" id="map-viewport">
+          <div class="map-stage" id="map-stage">
+            <img id="map-image" alt="Carte vierge des spawns" draggable="false">
+            <div id="spawn-layer"></div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="patterns-panel">
+        <header class="panel-header compact">
+          <h2>Patterns</h2>
+          <p><span id="pattern-count">0</span> résultat(s)</p>
+        </header>
+        <div class="pattern-list" id="pattern-list"></div>
+      </aside>
+    </main>
+
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
