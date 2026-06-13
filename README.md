@@ -24,3 +24,10 @@ Nightreign Patterns aide à retrouver rapidement une carte possible d'Elden Ring
 - Les spawns Great Hollow sont séparés des autres spawns.
 - Le bouton Réinitialiser remet les filtres à zéro et réaffiche la carte vierge.
 - Les icônes de Nightlord servent uniquement à faciliter l'identification visuelle.
+
+## Sources et droits
+
+Une grande partie des données et cartes utilisées provient du travail de thefifthmatt :
+https://github.com/thefifthmatt/thefifthmatt.github.io
+
+Le dépôt source ne publie pas de licence explicite à ce jour. Les droits restent détenus par leurs auteurs respectifs.
