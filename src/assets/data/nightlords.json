@@ -1,0 +1,62 @@
+﻿[
+    {
+        "id":  "gladius",
+        "name":  "Gladius",
+        "alternateName":  "Tricephalos",
+        "imageUrl":  "assets/images/nightlords/gladius.png"
+    },
+    {
+        "id":  "adel",
+        "name":  "Adel",
+        "alternateName":  "Gaping Jaw",
+        "imageUrl":  "assets/images/nightlords/adel.png"
+    },
+    {
+        "id":  "gnoster",
+        "name":  "Gnoster",
+        "alternateName":  "Sentient Pest",
+        "imageUrl":  "assets/images/nightlords/gnoster.png"
+    },
+    {
+        "id":  "maris",
+        "name":  "Maris",
+        "alternateName":  "Augur",
+        "imageUrl":  "assets/images/nightlords/maris.png"
+    },
+    {
+        "id":  "libra",
+        "name":  "Libra",
+        "alternateName":  "Equilibrious Beast",
+        "imageUrl":  "assets/images/nightlords/libra.png"
+    },
+    {
+        "id":  "fulghor",
+        "name":  "Fulghor",
+        "alternateName":  "Darkdrift Knight",
+        "imageUrl":  "assets/images/nightlords/fulghor.png"
+    },
+    {
+        "id":  "caligo",
+        "name":  "Caligo",
+        "alternateName":  "Fissure in the Fog",
+        "imageUrl":  "assets/images/nightlords/caligo.png"
+    },
+    {
+        "id":  "heolstor",
+        "name":  "Heolstor",
+        "alternateName":  "Night Aspect",
+        "imageUrl":  "assets/images/nightlords/heolstor.png"
+    },
+    {
+        "id":  "harmonia",
+        "name":  "Harmonia",
+        "alternateName":  "Balancers",
+        "imageUrl":  "assets/images/nightlords/harmonia.png"
+    },
+    {
+        "id":  "straghess",
+        "name":  "Straghess",
+        "alternateName":  "Dreglord",
+        "imageUrl":  "assets/images/nightlords/straghess.png"
+    }
+]

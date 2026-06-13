@@ -1,0 +1,87 @@
+﻿[
+    {
+        "id":  "morgott-invasion",
+        "name":  "Morgott Invasion",
+        "description":  "Adel, Gnoster, Heolstor, Straghess"
+    },
+    {
+        "id":  "maris-bubbles",
+        "name":  "Maris Bubbles",
+        "description":  "Gnoster, Caligo, Heolstor, Straghess"
+    },
+    {
+        "id":  "gnoster-plague",
+        "name":  "Gnoster Plague",
+        "description":  "Maris, Libra, Heolstor, Straghess"
+    },
+    {
+        "id":  "libra-curse",
+        "name":  "Libra Curse",
+        "description":  "Fulghor, Caligo, Heolstor, Straghess"
+    },
+    {
+        "id":  "gladius-invasion",
+        "name":  "Gladius Invasion",
+        "description":  "All Nightlords except Gladius (DLC patterns only)"
+    },
+    {
+        "id":  "caligo-blizzard",
+        "name":  "Caligo Blizzard",
+        "description":  "All Nightlords except Caligo (DLC patterns only)"
+    },
+    {
+        "id":  "balancers-raid",
+        "name":  "Balancers Raid",
+        "description":  "All Nightlords except Harmonia (DLC patterns only)"
+    },
+    {
+        "id":  "frenzy-tower",
+        "name":  "Frenzy Tower",
+        "description":  "Gnoster, Libra, Harmonia, Straghess"
+    },
+    {
+        "id":  "extra-night-boss",
+        "name":  "Extra Night Boss",
+        "description":  "Adel, Fulghor, Harmonia, Straghess"
+    },
+    {
+        "id":  "night-horde",
+        "name":  "Night Horde",
+        "description":  "Gladius, Maris, Fulghor, Harmonia"
+    },
+    {
+        "id":  "meteor-strike",
+        "name":  "Meteor Strike",
+        "description":  "Gladius, Adel, Caligo, Harmonia"
+    },
+    {
+        "id":  "walking-mausoleum",
+        "name":  "Walking Mausoleum",
+        "description":  "Maris, Caligo, Harmonia"
+    },
+    {
+        "id":  "difficult-sorcerer-s-rise",
+        "name":  "Difficult Sorcerer\u0027s Rise",
+        "description":  "Gnoster, Libra, Harmonia"
+    },
+    {
+        "id":  "other-events-happen-randomly-6-8-minutes-into-day-1",
+        "name":  "Other events happen randomly 6-8 minutes into Day 1."
+    },
+    {
+        "id":  "the-gladius-event-in-other-maps-happens-exactly-2-minutes-into-day-2",
+        "name":  "The Gladius event in other maps happens exactly 2 minutes into Day 2."
+    },
+    {
+        "id":  "when-any-shifting-earth-is-active-other-night-boss-events-italicized-above-happen-randomly-2-3-minutes-into-day-2",
+        "name":  "When any Shifting Earth is active, other Night Boss events (italicized above) happen randomly 2-3 minutes into Day 2."
+    },
+    {
+        "id":  "with-no-shifting-earth-other-dlc-events-caligo-balancers-happen-randomly-2-6-minutes-into-day-2",
+        "name":  "With no Shifting Earth, other DLC events (Caligo, Balancers) happen randomly 2-6 minutes into Day 2."
+    },
+    {
+        "id":  "with-no-shifting-earth-other-events-happen-randomly-2-8-minutes-into-day-2",
+        "name":  "With no Shifting Earth, other events happen randomly 2-8 minutes into Day 2."
+    }
+]

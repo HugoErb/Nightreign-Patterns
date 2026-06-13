@@ -1,0 +1,26 @@
+﻿[
+    {
+        "id":  "default",
+        "name":  "Default"
+    },
+    {
+        "id":  "crater",
+        "name":  "Crater"
+    },
+    {
+        "id":  "great-hollow",
+        "name":  "Great Hollow"
+    },
+    {
+        "id":  "mountaintop",
+        "name":  "Mountaintop"
+    },
+    {
+        "id":  "noklateo",
+        "name":  "Noklateo"
+    },
+    {
+        "id":  "rotted-woods",
+        "name":  "Rotted Woods"
+    }
+]

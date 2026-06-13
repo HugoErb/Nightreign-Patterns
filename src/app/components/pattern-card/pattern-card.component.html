@@ -1,0 +1,24 @@
+<div
+  role="button"
+  tabindex="0"
+  class="group w-full cursor-pointer rounded-lg border bg-zinc-900 text-left shadow-lg hover:border-amber-500/60 hover:bg-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500"
+  [class.border-amber-500]="selected"
+  [class.border-zinc-800]="!selected"
+  [class.ring-1]="selected"
+  [class.ring-amber-500]="selected"
+  (click)="selectPattern.emit(pattern)"
+  (keydown.enter)="selectPattern.emit(pattern)"
+  (keydown.space)="selectPattern.emit(pattern)"
+>
+  <div class="space-y-2 p-3">
+    <div class="flex items-center justify-between gap-2">
+      <span class="text-base font-semibold text-amber-400">#{{ pattern.id }}</span>
+      <span class="truncate text-xs text-zinc-400">{{ mapTypeName }}</span>
+    </div>
+    <div class="text-sm text-zinc-100">{{ nightlordName }}</div>
+    <div class="truncate text-xs text-zinc-400">{{ spawnName || 'Spawn inconnu' }}</div>
+    <div class="truncate text-xs text-zinc-500">
+      {{ eventNames.length ? eventNames.join(', ') : 'Aucun événement' }}
+    </div>
+  </div>
+</div>

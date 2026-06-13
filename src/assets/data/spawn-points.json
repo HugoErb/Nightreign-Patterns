@@ -1,0 +1,74 @@
+﻿[
+    {
+        "id":  "above-stormhill-tunnel-entrance",
+        "name":  "Above Stormhill Tunnel Entrance",
+        "x":  0.20841423948220065,
+        "y":  0.3553398058252427
+    },
+    {
+        "id":  "below-summonwater-hawk",
+        "name":  "Below Summonwater Hawk",
+        "x":  0.7288025889967638,
+        "y":  0.3741100323624595
+    },
+    {
+        "id":  "east-of-cavalry-bridge",
+        "name":  "East of Cavalry Bridge",
+        "x":  0.859546925566343,
+        "y":  0.5857605177993528
+    },
+    {
+        "id":  "far-southwest",
+        "name":  "Far Southwest",
+        "x":  0.20388349514563106,
+        "y":  0.7307443365695792
+    },
+    {
+        "id":  "minor-erdtree",
+        "name":  "Minor Erdtree",
+        "x":  0.5825242718446602,
+        "y":  0.662135922330097
+    },
+    {
+        "id":  "northeast",
+        "name":  "Northeast",
+        "x":  0.74,
+        "y":  0.28
+    },
+    {
+        "id":  "northeast-of-saintsbridge",
+        "name":  "Northeast of Saintsbridge",
+        "x":  0.5650485436893204,
+        "y":  0.20129449838187703
+    },
+    {
+        "id":  "south",
+        "name":  "South",
+        "x":  0.55,
+        "y":  0.79
+    },
+    {
+        "id":  "southeast-of-lake",
+        "name":  "Southeast of Lake",
+        "x":  0.6019417475728155,
+        "y":  0.8588996763754045
+    },
+    {
+        "id":  "southwest",
+        "name":  "Southwest",
+        "x":  0.27,
+        "y":  0.77
+    },
+    {
+        "id":  "stormhill-south-of-gate",
+        "name":  "Stormhill South of Gate",
+        "x":  0.37152103559870554,
+        "y":  0.4168284789644013
+    },
+    {
+        "id":  "west-of-warmaster-s-shack",
+        "name":  "West of Warmaster\u0027s Shack",
+        "x":  0.2045307443365696,
+        "y":  0.5838187702265372
+    }
+]
