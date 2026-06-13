@@ -72,12 +72,12 @@ assertPosition(farSouthwest, 'blank-map', 0.20388349514563106, 0.730744336569579
 assertPosition(minorErdtree, 'blank-map', 0.859546925566343, 0.5857605177993528);
 assertPosition(eastOfCavalryBridge, 'pattern-map', 0.5625242718446602, 0.662135922330097);
 assertPosition(aboveStormhillTunnelEntrance, 'pattern-map', 0.20841423948220065, 0.3553398058252427);
-assertPosition(farSouthwest, 'pattern-map', 0.20388349514563106, 0.7307443365695792);
+assertPosition(farSouthwest, 'pattern-map', 0.20388349514563106, 0.7);
 assertPosition(minorErdtree, 'pattern-map', 0.82, 0.5857605177993528);
 assertPosition(northeastOfSaintsbridge, 'pattern-map', 0.525, 0.20129449838187703);
 assertPosition(southeastOfLake, 'blank-map', 0.6019417475728155, 0.8588996763754045);
 assertPosition(southeastOfLake, 'pattern-map', 0.56, 0.8);
 assertPosition(stormhillSouthOfGate, 'blank-map', 0.2045307443365696, 0.5838187702265372);
-assertPosition(stormhillSouthOfGate, 'pattern-map', 0.20453074433656958, 0.5838187702265372);
+assertPosition(stormhillSouthOfGate, 'pattern-map', 0.20453074433656958, 0.555);
 assertPosition(westOfWarmastersShack, 'blank-map', 0.37152103559870554, 0.4168284789644013);
 assertPosition(westOfWarmastersShack, 'pattern-map', 0.3515210355987055, 0.4168284789644013);

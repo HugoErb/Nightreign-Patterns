@@ -16,11 +16,11 @@ const BLANK_MAP_OVERRIDES: Record<string, { x: number; y: number }> = {
 const PATTERN_MAP_OVERRIDES: Record<string, Partial<{ x: number; y: number }>> = {
   'above-stormhill-tunnel-entrance': { x: 0.22841423948220064 },
   'east-of-cavalry-bridge': { x: 0.5825242718446602, y: 0.662135922330097 },
-  'far-southwest': { x: 0.22388349514563105 },
+  'far-southwest': { x: 0.22388349514563105, y: 0.7 },
   'minor-erdtree': { x: 0.84, y: 0.5857605177993528 },
   'northeast-of-saintsbridge': { x: 0.545 },
   'southeast-of-lake': { x: 0.58, y: 0.8 },
-  'stormhill-south-of-gate': { x: 0.22453074433656958, y: 0.5838187702265372 },
+  'stormhill-south-of-gate': { x: 0.22453074433656958, y: 0.555 },
   'west-of-warmaster-s-shack': { x: 0.37152103559870554, y: 0.4168284789644013 },
 };
 
