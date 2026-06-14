@@ -5,6 +5,7 @@ import {
   isSpawnPointAvailableForMapType,
   patternEventDisplay,
   patternMatchesFilters,
+  updatePatternCardSelection,
   spawnMarkerPosition,
 } from './logic.js';
 
@@ -304,6 +305,8 @@ function createPatternCard(pattern) {
   const selected = state.displayedPattern?.id === pattern.id && state.displayedPattern?.nightlordId === pattern.nightlordId;
   card.type = 'button';
   card.className = `pattern-card${selected ? ' selected' : ''}`;
+  card.dataset.patternId = String(pattern.id);
+  card.dataset.nightlordId = pattern.nightlordId;
   card.innerHTML = `
     <div class="pattern-card-top">
       <span class="pattern-id">#${escapeHtml(pattern.id)}</span>
@@ -316,7 +319,8 @@ function createPatternCard(pattern) {
   card.querySelector('.pattern-event').textContent = patternEventDisplay(pattern, eventNames(pattern.eventIds));
   card.addEventListener('click', () => {
     state.displayedPattern = pattern;
-    renderAll();
+    renderMap();
+    updatePatternCardSelection(els.patternList, state.displayedPattern);
   });
   return card;
 }

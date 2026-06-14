@@ -59,6 +59,21 @@ export function patternMatchesFilters(pattern, filters) {
     && (!filters.spawnPointId || pattern.spawnPointId === filters.spawnPointId);
 }
 
+export function updatePatternCardSelection(patternList, selectedPattern) {
+  const scrollTop = patternList.scrollTop;
+
+  for (const card of patternList.querySelectorAll('.pattern-card')) {
+    card.classList.toggle(
+      'selected',
+      Boolean(selectedPattern)
+        && card.dataset.patternId === String(selectedPattern.id)
+        && card.dataset.nightlordId === selectedPattern.nightlordId,
+    );
+  }
+
+  patternList.scrollTop = scrollTop;
+}
+
 export function patternEventDisplay(pattern, fallbackEventNames = []) {
   if (pattern.eventText) {
     return pattern.eventText === 'None' ? 'Aucun événement' : pattern.eventText;
