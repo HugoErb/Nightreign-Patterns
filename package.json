@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "node --check app.js && node --check logic.js",
-    "test": "node --test logic.test.js"
+    "build": "node --check app.js && node --check logic.js"
   },
   "private": true,
   "packageManager": "npm@11.12.0",

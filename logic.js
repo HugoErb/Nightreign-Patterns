@@ -11,10 +11,11 @@ export const BLANK_MAP_OVERRIDES = {
 };
 
 export const PATTERN_MAP_OVERRIDES = {
-  'above-stormhill-tunnel-entrance': { x: 0.37152103559870554, y: 0.4168284789644013 },
-  'east-of-cavalry-bridge': { x: 0.5825242718446602, y: 0.662135922330097 },
+  'above-stormhill-tunnel-entrance': { x: 0.37152103559870554, y: 0.3968284789644013 },
+  'below-summonwater-hawk': { x: 0.7088025889967638, y: 0.3741100323624595 },
+  'east-of-cavalry-bridge': { x: 0.5625242718446602, y: 0.642135922330097 },
   'far-southwest': { x: 0.22388349514563105, y: 0.7 },
-  'minor-erdtree': { x: 0.84, y: 0.5857605177993528 },
+  'minor-erdtree': { x: 0.82, y: 0.5857605177993528 },
   'northeast-of-saintsbridge': { x: 0.545 },
   'southeast-of-lake': { x: 0.58, y: 0.8 },
   'stormhill-south-of-gate': { x: 0.22453074433656958, y: 0.555 },
