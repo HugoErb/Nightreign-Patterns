@@ -58,9 +58,6 @@
         </section>
 
         <button class="reset-button" id="reset-button" type="button">Reset</button>
-        <button class="toggle-panel-button" id="nightlords-panel-toggle" type="button" aria-pressed="true">
-          Hide Nightlords Compendium
-        </button>
       </aside>
 
       <section class="map-panel">
@@ -84,9 +81,14 @@
       </section>
 
       <aside class="nightlords-panel">
-        <header class="panel-header compact">
-          <h2>Nightlords</h2>
-          <p>Compendium</p>
+        <header class="panel-header compact nightlords-panel-header">
+          <div class="nightlords-panel-title">
+            <h2>Nightlords</h2>
+            <p>Compendium</p>
+          </div>
+          <button class="nightlords-panel-toggle" id="nightlords-panel-toggle" type="button" aria-expanded="true" title="Collapse Nightlords Compendium" aria-label="Collapse Nightlords Compendium">
+            <span class="toggle-icon" aria-hidden="true"></span>
+          </button>
         </header>
         <div class="nightlord-compendium-list" id="nightlord-compendium-list"></div>
       </aside>

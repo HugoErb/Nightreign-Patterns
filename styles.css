@@ -28,8 +28,8 @@ select {
   background: #09090b;
 }
 
-.app-shell.nightlords-hidden {
-  grid-template-columns: 280px minmax(0, 1fr) minmax(260px, max-content);
+.app-shell.nightlords-collapsed {
+  grid-template-columns: 280px minmax(0, 1fr) 76px minmax(260px, max-content);
 }
 
 .filters-panel,
@@ -51,6 +51,7 @@ select {
   max-width: 320px;
   flex-direction: column;
   overflow: hidden;
+  border-left: 1px solid #27272a;
 }
 
 .nightlords-panel {
@@ -58,10 +59,6 @@ select {
   flex-direction: column;
   overflow: hidden;
   border-left: 1px solid #27272a;
-}
-
-.nightlords-panel[hidden] {
-  display: none;
 }
 
 .map-panel {
@@ -77,7 +74,62 @@ select {
 .panel-header.compact {
   margin: 0;
   border-bottom: 1px solid #27272a;
+  min-height: 61px;
   padding: 12px 16px;
+}
+
+.nightlords-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.nightlords-panel-title {
+  min-width: 0;
+}
+
+.nightlords-panel-toggle {
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  background: #18181b;
+  color: #f4f4f5;
+  cursor: pointer;
+}
+
+.nightlords-panel-toggle:hover {
+  background: #27272a;
+}
+
+.nightlords-panel-toggle:focus {
+  box-shadow: 0 0 0 2px #f59e0b;
+}
+
+.toggle-icon {
+  width: 9px;
+  height: 9px;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+}
+
+.nightlords-panel.collapsed .nightlords-panel-header {
+  justify-content: center;
+  padding: 12px 8px;
+}
+
+.nightlords-panel.collapsed .nightlords-panel-title {
+  display: none;
+}
+
+.nightlords-panel.collapsed .toggle-icon {
+  transform: rotate(225deg);
 }
 
 .panel-header h1,
@@ -266,24 +318,14 @@ select {
   color: #f59e0b;
 }
 
-.reset-button,
-.toggle-panel-button {
+.reset-button {
   width: 100%;
   padding: 9px 12px;
   cursor: pointer;
   font-weight: 650;
 }
 
-.toggle-panel-button {
-  margin-top: 8px;
-  border: 1px solid #27272a;
-  border-radius: 8px;
-  background: #18181b;
-  color: #f4f4f5;
-}
-
 .reset-button:hover,
-.toggle-panel-button:hover,
 .map-controls button:hover,
 .icon-button:hover {
   background: #27272a;
@@ -352,7 +394,7 @@ select {
   border: 0;
   background: transparent;
   padding: 0;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(var(--spawn-marker-scale, 1));
 }
 
 button.spawn-marker {
@@ -423,12 +465,24 @@ button.spawn-marker {
   padding: 12px;
 }
 
+.nightlords-panel.collapsed .nightlord-compendium-list {
+  padding: 8px;
+  overflow-x: hidden;
+}
+
 .nightlord-boss-card {
   margin-bottom: 12px;
   border: 1px solid #27272a;
   border-radius: 8px;
   background: #18181b;
   padding: 12px;
+}
+
+.nightlords-panel.collapsed .nightlord-boss-card {
+  margin-bottom: 8px;
+  border: 0;
+  background: transparent;
+  padding: 0;
 }
 
 .nightlord-boss-header {
@@ -441,6 +495,10 @@ button.spawn-marker {
 
 .nightlord-boss-card[open] .nightlord-boss-header {
   margin-bottom: 12px;
+}
+
+.nightlords-panel.collapsed .nightlord-boss-card[open] .nightlord-boss-header {
+  margin-bottom: 0;
 }
 
 .nightlord-boss-header::-webkit-details-marker {
@@ -462,11 +520,31 @@ button.spawn-marker {
   transform: rotate(225deg);
 }
 
+.nightlords-panel.collapsed .nightlord-boss-header {
+  justify-content: center;
+  gap: 0;
+  padding: 4px 0;
+}
+
+.nightlords-panel.collapsed .nightlord-boss-header::after,
+.nightlords-panel.collapsed .nightlord-boss-header div,
+.nightlords-panel.collapsed .nightlord-boss-variants {
+  display: none;
+}
+
 .nightlord-boss-header img {
   width: 44px;
   height: 44px;
   flex: 0 0 auto;
   object-fit: contain;
+}
+
+.nightlords-panel.collapsed .nightlord-boss-header img {
+  border-radius: 8px;
+}
+
+.nightlords-panel.collapsed .nightlord-boss-header:hover img {
+  background: #27272a;
 }
 
 .nightlord-boss-header h3,
@@ -701,6 +779,10 @@ button.spawn-marker {
     height: auto;
     min-height: 100vh;
     overflow: visible;
+  }
+
+  .app-shell.nightlords-collapsed {
+    grid-template-columns: 1fr;
   }
 
   .filters-panel,

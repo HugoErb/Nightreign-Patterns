@@ -93,6 +93,17 @@ function bindStaticEvents() {
     renderNightlordsPanelVisibility({ fitMap: true });
   });
 
+  els.nightlordCompendiumList.addEventListener('click', (event) => {
+    const card = event.target.closest('.nightlord-boss-card');
+    if (state.nightlordsPanelVisible || !card) {
+      return;
+    }
+    event.preventDefault();
+    card.open = true;
+    state.nightlordsPanelVisible = true;
+    renderNightlordsPanelVisibility({ fitMap: true });
+  });
+
   document.addEventListener('click', (event) => {
     if (!els.nightlordSelect.contains(event.target)) {
       setNightlordMenuOpen(false);
@@ -350,12 +361,13 @@ function renderNightlordCompendium() {
 }
 
 function renderNightlordsPanelVisibility({ fitMap = false } = {}) {
-  els.appShell.classList.toggle('nightlords-hidden', !state.nightlordsPanelVisible);
-  els.nightlordsPanel.hidden = !state.nightlordsPanelVisible;
-  els.nightlordsPanelToggle.textContent = state.nightlordsPanelVisible
-    ? 'Hide Nightlords Compendium'
-    : 'Show Nightlords Compendium';
-  els.nightlordsPanelToggle.setAttribute('aria-pressed', String(state.nightlordsPanelVisible));
+  const expanded = state.nightlordsPanelVisible;
+  const label = expanded ? 'Collapse Nightlords Compendium' : 'Expand Nightlords Compendium';
+  els.appShell.classList.toggle('nightlords-collapsed', !expanded);
+  els.nightlordsPanel.classList.toggle('collapsed', !expanded);
+  els.nightlordsPanelToggle.setAttribute('aria-expanded', String(expanded));
+  els.nightlordsPanelToggle.setAttribute('aria-label', label);
+  els.nightlordsPanelToggle.title = label;
   if (fitMap) {
     requestAnimationFrame(() => requestAnimationFrame(fitMapToViewport));
   }
@@ -366,9 +378,10 @@ function createNightlordBossCard(boss) {
   const card = document.createElement('details');
   card.className = 'nightlord-boss-card';
   card.open = state.filters.nightlordId === boss.nightlordId;
+  card.title = boss.name;
   card.innerHTML = `
     <summary class="nightlord-boss-header">
-      <img src="${assetUrl(nightlord?.imageUrl)}" alt="">
+      <img src="${assetUrl(nightlord?.imageUrl)}" alt="${escapeHtml(boss.name)}">
       <div>
         <h3>${escapeHtml(boss.name)}</h3>
       </div>
@@ -461,6 +474,7 @@ function fitMapToViewport() {
 
 function updateMapTransform() {
   els.mapStage.style.transform = `translate(-50%, -50%) translate(${state.offsetX}px, ${state.offsetY}px) scale(${state.zoom})`;
+  els.mapStage.style.setProperty('--spawn-marker-scale', String(1 / state.zoom));
 }
 
 function option(value, label) {
