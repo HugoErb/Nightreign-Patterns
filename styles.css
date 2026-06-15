@@ -21,7 +21,7 @@ select {
 
 .app-shell {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr) 420px 380px;
+  grid-template-columns: 280px minmax(0, 1fr) 420px minmax(260px, max-content);
   height: 100vh;
   min-height: 0;
   overflow: hidden;
@@ -29,7 +29,7 @@ select {
 }
 
 .app-shell.nightlords-hidden {
-  grid-template-columns: 280px minmax(0, 1fr) 380px;
+  grid-template-columns: 280px minmax(0, 1fr) minmax(260px, max-content);
 }
 
 .filters-panel,
@@ -47,6 +47,8 @@ select {
 
 .patterns-panel {
   display: flex;
+  width: max-content;
+  max-width: 320px;
   flex-direction: column;
   overflow: hidden;
 }
@@ -87,7 +89,7 @@ select {
 }
 
 .panel-header h1 {
-  font-size: 18px;
+  font-size: 21px;
 }
 
 .panel-header p,

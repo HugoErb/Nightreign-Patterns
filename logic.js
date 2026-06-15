@@ -178,8 +178,8 @@ export function updatePatternCardSelection(patternList, selectedPattern) {
 
 export function patternEventDisplay(pattern, fallbackEventNames = []) {
   if (pattern.eventText) {
-    return pattern.eventText === 'None' ? 'Aucun événement' : pattern.eventText;
+    return pattern.eventText === 'None' ? 'No event' : pattern.eventText;
   }
 
-  return fallbackEventNames.length ? fallbackEventNames.join(', ') : 'Aucun événement';
+  return fallbackEventNames.length ? fallbackEventNames.join(', ') : 'No event';
 }

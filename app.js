@@ -53,14 +53,13 @@ async function init() {
     renderNightlordCompendium();
     renderAll();
   } catch {
-    document.body.innerHTML = '<div class="load-error">Impossible de charger les fichiers JSON locaux.</div>';
+    document.body.innerHTML = '<div class="load-error">Unable to load local JSON files.</div>';
   }
 }
 
 function bindElements() {
   Object.assign(els, {
     appShell: document.getElementById('app-shell'),
-    resultCount: document.getElementById('result-count'),
     patternCount: document.getElementById('pattern-count'),
     nightlordSelect: document.getElementById('nightlord-select'),
     nightlordButton: document.getElementById('nightlord-button'),
@@ -91,7 +90,7 @@ function bindStaticEvents() {
 
   els.nightlordsPanelToggle.addEventListener('click', () => {
     state.nightlordsPanelVisible = !state.nightlordsPanelVisible;
-    renderNightlordsPanelVisibility();
+    renderNightlordsPanelVisibility({ fitMap: true });
   });
 
   document.addEventListener('click', (event) => {
@@ -207,7 +206,7 @@ function renderNightlordMenu() {
   const unknown = document.createElement('button');
   unknown.type = 'button';
   unknown.className = 'nightlord-option';
-  unknown.innerHTML = '<span class="unknown-icon">?</span><span>Inconnu</span>';
+  unknown.innerHTML = '<span class="unknown-icon">?</span><span>Unknown</span>';
   unknown.addEventListener('click', () => selectNightlord(''));
 
   const options = state.data.nightlords.map((nightlord) => {
@@ -231,13 +230,13 @@ function renderNightlordSelection() {
   } else {
     els.selectedNightlordIcon.outerHTML = '<span class="unknown-icon" id="selected-nightlord-icon">?</span>';
     els.selectedNightlordIcon = document.getElementById('selected-nightlord-icon');
-    els.selectedNightlordName.textContent = 'Inconnu';
+    els.selectedNightlordName.textContent = 'Unknown';
   }
 }
 
 function renderSpawnOptions() {
   const spawns = filterSpawnPointsForMapType(state.data.spawnPoints, state.filters.mapTypeId);
-  els.spawnFilter.replaceChildren(option('', 'Tous / inconnu'), ...spawns.map((spawn) => option(spawn.id, spawn.name)));
+  els.spawnFilter.replaceChildren(option('', 'All / unknown'), ...spawns.map((spawn) => option(spawn.id, spawn.name)));
   els.spawnFilter.value = state.filters.spawnPointId;
   els.mapTypeFilter.value = state.filters.mapTypeId;
 }
@@ -247,14 +246,14 @@ function renderMap() {
   const selectedSpawnName = spawnName(state.filters.spawnPointId);
 
   if (pattern) {
-    els.mapSubtitle.innerHTML = `Pattern affiché : <span>#${escapeHtml(pattern.id)}</span>`;
+    els.mapSubtitle.innerHTML = `Displayed pattern: <span>#${escapeHtml(pattern.id)}</span>`;
     els.mapImage.src = assetUrl(pattern.imageUrl);
     els.mapImage.alt = `Pattern ${pattern.id}`;
     renderPatternSpawn(pattern);
   } else {
-    els.mapSubtitle.innerHTML = `Spawn sélectionné : <span>${escapeHtml(selectedSpawnName || 'inconnu / non défini')}</span>`;
+    els.mapSubtitle.innerHTML = `Selected spawn: <span>${escapeHtml(selectedSpawnName || 'unknown / undefined')}</span>`;
     els.mapImage.src = blankMapImageForMapType(state.filters.mapTypeId);
-    els.mapImage.alt = 'Carte vierge des spawns';
+    els.mapImage.alt = 'Blank spawn map';
     renderBlankMapSpawns();
   }
 
@@ -308,11 +307,10 @@ function createSpawnMarker(spawn, { selected = false, pattern = false, asButton 
 
 function renderPatterns() {
   const patterns = state.data.patterns.filter((pattern) => patternMatchesFilters(pattern, state.filters));
-  els.resultCount.textContent = String(patterns.length);
   els.patternCount.textContent = String(patterns.length);
 
   if (!patterns.length) {
-    els.patternList.innerHTML = '<div class="empty-message">Aucun pattern ne correspond aux filtres.</div>';
+    els.patternList.innerHTML = '<div class="empty-message">No pattern matches the filters.</div>';
     return;
   }
 
@@ -332,8 +330,8 @@ function createPatternCard(pattern) {
       <span class="pattern-map-type">${escapeHtml(mapTypeName(pattern.mapTypeId))}</span>
     </div>
     <div class="pattern-nightlord">${escapeHtml(nightlordDisplayName(pattern.nightlordId))}</div>
-    <div class="pattern-spawn">${escapeHtml(spawnName(pattern.spawnPointId) || 'Spawn inconnu')}</div>
-    <div class="pattern-event">${escapeHtml(eventNames(pattern.eventIds).join(', ') || 'Aucun événement')}</div>
+    <div class="pattern-spawn">${escapeHtml(spawnName(pattern.spawnPointId) || 'Unknown spawn')}</div>
+    <div class="pattern-event">${escapeHtml(eventNames(pattern.eventIds).join(', ') || 'No event')}</div>
   `;
   card.querySelector('.pattern-event').textContent = patternEventDisplay(pattern, eventNames(pattern.eventIds));
   card.addEventListener('click', () => {
@@ -351,13 +349,16 @@ function renderNightlordCompendium() {
   els.nightlordCompendiumList.replaceChildren(...bosses.map(createNightlordBossCard));
 }
 
-function renderNightlordsPanelVisibility() {
+function renderNightlordsPanelVisibility({ fitMap = false } = {}) {
   els.appShell.classList.toggle('nightlords-hidden', !state.nightlordsPanelVisible);
   els.nightlordsPanel.hidden = !state.nightlordsPanelVisible;
   els.nightlordsPanelToggle.textContent = state.nightlordsPanelVisible
-    ? 'Masquer Nightlords Compendium'
-    : 'Afficher Nightlords Compendium';
+    ? 'Hide Nightlords Compendium'
+    : 'Show Nightlords Compendium';
   els.nightlordsPanelToggle.setAttribute('aria-pressed', String(state.nightlordsPanelVisible));
+  if (fitMap) {
+    requestAnimationFrame(() => requestAnimationFrame(fitMapToViewport));
+  }
 }
 
 function createNightlordBossCard(boss) {
@@ -432,6 +433,30 @@ function selectNightlord(nightlordId) {
 function setNightlordMenuOpen(open) {
   els.nightlordMenu.hidden = !open;
   els.nightlordButton.setAttribute('aria-expanded', String(open));
+}
+
+function fitMapToViewport() {
+  const viewport = els.mapViewport.getBoundingClientRect();
+  const stageWidth = els.mapStage.offsetWidth;
+  const imageRatio = els.mapImage.naturalWidth && els.mapImage.naturalHeight
+    ? els.mapImage.naturalHeight / els.mapImage.naturalWidth
+    : 1;
+  const stageHeight = stageWidth * imageRatio;
+
+  if (!viewport.width || !viewport.height || !stageWidth || !stageHeight) {
+    return;
+  }
+
+  state.zoom = roundZoom(Math.min(
+    4,
+    Math.max(
+      0.2,
+      Math.min((viewport.width * 0.94) / stageWidth, (viewport.height * 0.94) / stageHeight),
+    ),
+  ));
+  state.offsetX = 0;
+  state.offsetY = 0;
+  updateMapTransform();
 }
 
 function updateMapTransform() {
