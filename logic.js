@@ -22,8 +22,109 @@ export const PATTERN_MAP_OVERRIDES = {
   'west-of-warmaster-s-shack': { x: 0.22841423948220064, y: 0.3553398058252427 },
 };
 
+export const ATTACK_TYPE_NAMES = {
+  0: 'Slash',
+  1: 'Strike',
+  2: 'Pierce',
+  3: 'Standard',
+};
+
+export const ELEMENTAL_TYPE_NAMES = {
+  10: 'Magic',
+  11: 'Fire',
+  12: 'Lightning',
+  13: 'Holy',
+  20: 'Poison',
+  21: 'Scarlet Rot',
+  22: 'Bloodloss',
+  23: 'Frostbite',
+  24: 'Sleep',
+  25: 'Madness',
+  26: 'Blight',
+};
+
+export const BOSS_TYPE_NAMES = {
+  7: 'Final Boss',
+  8: 'Everdark Boss',
+};
+
+export const EFFECT_ICON_URLS = {
+  0: 'https://relics.pro/assets/attack_slash-CI9F4dry.png',
+  1: 'https://relics.pro/assets/attack_strike-Cgph_98_.png',
+  2: 'https://relics.pro/assets/attack_pierce-DGUr4adj.png',
+  3: 'https://relics.pro/assets/attack_standard-D-05LDa8.png',
+  10: 'https://relics.pro/assets/status_magic-DjMV7Yt_.png',
+  11: 'https://relics.pro/assets/status_fire-BF8ztGvW.png',
+  12: 'https://relics.pro/assets/status_lightning-Ckn6M2XK.png',
+  13: 'https://relics.pro/assets/status_holy-BVwpk6da.png',
+  20: 'https://relics.pro/assets/status_poison-Ds7gnFRt.png',
+  21: 'https://relics.pro/assets/status_rot-CD6o1CEq.png',
+  22: 'https://relics.pro/assets/status_bleed-Dm1BTG_P.png',
+  23: 'https://relics.pro/assets/status_frost-BL1dbQpR.png',
+  24: 'https://relics.pro/assets/status_sleep-DbyIubp3.png',
+  25: 'https://relics.pro/assets/status_madness-BKpi4YEH.png',
+};
+
 export function assetUrl(url) {
   return url?.startsWith('assets/') ? `src/${url}` : url;
+}
+
+export function bossNegationGroups(bossNpc) {
+  const weakAgainst = [];
+  const strongAgainst = [];
+  collectNegations(bossNpc.attackNegations, ATTACK_TYPE_NAMES, 'attack', weakAgainst, strongAgainst);
+  collectNegations(bossNpc.elementalNegations, ELEMENTAL_TYPE_NAMES, 'elemental', weakAgainst, strongAgainst);
+  return { weakAgainst, strongAgainst };
+}
+
+export function bossResistances(bossNpc) {
+  return Object.entries(bossNpc.resistances ?? {})
+    .map(([id, values]) => ({
+      id,
+      name: ELEMENTAL_TYPE_NAMES[id] ?? id,
+      value: formatResistanceValue(values),
+      category: 'elemental',
+    }))
+    .filter((item) => item.value && item.id !== '26');
+}
+
+export function effectIconUrl(id) {
+  return EFFECT_ICON_URLS[id] ?? '';
+}
+
+export function bossTypeName(type) {
+  return BOSS_TYPE_NAMES[type] ?? `Type ${type}`;
+}
+
+export function formatPartyValues(values) {
+  return values
+    .toReversed()
+    .map((value) => Number(value).toLocaleString('de-DE'))
+    .join(' / ');
+}
+
+export function formatResistanceValue(values = []) {
+  if (!values.length) {
+    return '';
+  }
+  return values[0] === 999 ? 'Immune' : String(values[0]);
+}
+
+function collectNegations(negations = {}, names, category, weakAgainst, strongAgainst) {
+  Object.entries(negations).forEach(([id, rawValue]) => {
+    const value = Number(rawValue);
+    const item = {
+      id,
+      name: names[id] ?? id,
+      value: value < 0 ? Math.abs(value) : -value,
+      category,
+    };
+    if (value < 0) {
+      weakAgainst.push(item);
+    } else if (value > 0) {
+      strongAgainst.push(item);
+    }
+  });
 }
 
 export function blankMapImageForMapType(mapTypeId) {

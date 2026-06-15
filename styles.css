@@ -21,14 +21,19 @@ select {
 
 .app-shell {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr) 380px;
+  grid-template-columns: 280px minmax(0, 1fr) 420px 380px;
   height: 100vh;
   min-height: 0;
   overflow: hidden;
   background: #09090b;
 }
 
+.app-shell.nightlords-hidden {
+  grid-template-columns: 280px minmax(0, 1fr) 380px;
+}
+
 .filters-panel,
+.nightlords-panel,
 .patterns-panel,
 .map-panel {
   min-height: 0;
@@ -44,6 +49,17 @@ select {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+}
+
+.nightlords-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border-left: 1px solid #27272a;
+}
+
+.nightlords-panel[hidden] {
+  display: none;
 }
 
 .map-panel {
@@ -248,14 +264,24 @@ select {
   color: #f59e0b;
 }
 
-.reset-button {
+.reset-button,
+.toggle-panel-button {
   width: 100%;
   padding: 9px 12px;
   cursor: pointer;
   font-weight: 650;
 }
 
+.toggle-panel-button {
+  margin-top: 8px;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  background: #18181b;
+  color: #f4f4f5;
+}
+
 .reset-button:hover,
+.toggle-panel-button:hover,
 .map-controls button:hover,
 .icon-button:hover {
   background: #27272a;
@@ -389,6 +415,208 @@ button.spawn-marker {
   padding: 16px;
 }
 
+.nightlord-compendium-list {
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+}
+
+.nightlord-boss-card {
+  margin-bottom: 12px;
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  background: #18181b;
+  padding: 12px;
+}
+
+.nightlord-boss-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.nightlord-boss-card[open] .nightlord-boss-header {
+  margin-bottom: 12px;
+}
+
+.nightlord-boss-header::-webkit-details-marker {
+  display: none;
+}
+
+.nightlord-boss-header::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  margin-left: auto;
+  border-right: 2px solid #a1a1aa;
+  border-bottom: 2px solid #a1a1aa;
+  transform: rotate(45deg);
+  transition: transform .15s ease;
+}
+
+.nightlord-boss-card[open] .nightlord-boss-header::after {
+  transform: rotate(225deg);
+}
+
+.nightlord-boss-header img {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.nightlord-boss-header h3,
+.nightlord-npc-top h4 {
+  margin: 0;
+  color: #f4f4f5;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.nightlord-boss-header p {
+  margin: 4px 0 0;
+  color: #71717a;
+  font-size: 11px;
+}
+
+.nightlord-boss-variants {
+  display: grid;
+  gap: 10px;
+}
+
+.nightlord-npc-card {
+  border-top: 1px solid #27272a;
+  padding-top: 10px;
+}
+
+.nightlord-npc-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.nightlord-npc-top span {
+  flex: 0 0 auto;
+  border: 1px solid rgba(245, 158, 11, .35);
+  border-radius: 999px;
+  padding: 2px 7px;
+  color: #f59e0b;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.nightlord-npc-card.everdark .nightlord-npc-top span {
+  border-color: rgba(168, 85, 247, .5);
+  color: #c084fc;
+}
+
+.nightlord-stat-group {
+  margin-top: 10px;
+}
+
+.nightlord-stat-group > span {
+  display: block;
+  margin-bottom: 6px;
+  color: #a1a1aa;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.nightlord-stat-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.nightlord-stat-list em {
+  color: #71717a;
+  font-size: 12px;
+}
+
+.nightlord-stat-pill {
+  display: inline-flex;
+  min-width: 72px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 7px;
+  border: 1px solid #3f3f46;
+  border-radius: 6px;
+  background: #09090b;
+  padding: 5px 7px;
+  font-size: 11px;
+}
+
+.nightlord-stat-pill img {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 auto;
+  object-fit: contain;
+}
+
+.nightlord-stat-pill span {
+  min-width: 0;
+  color: #e4e4e7;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nightlord-stat-pill b {
+  font-size: 12px;
+}
+
+.nightlord-stat-pill.weak b {
+  color: #4ade80;
+}
+
+.nightlord-stat-pill.strong b {
+  color: #f87171;
+}
+
+.nightlord-stat-pill.resistance b {
+  color: #38bdf8;
+}
+
+.nightlord-stat-pill.immune b {
+  color: #f59e0b;
+}
+
+.nightlord-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.nightlord-meta-grid div {
+  min-width: 0;
+}
+
+.nightlord-meta-grid span {
+  display: block;
+  color: #71717a;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+.nightlord-meta-grid b {
+  display: block;
+  overflow: hidden;
+  color: #f4f4f5;
+  font-size: 11px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .pattern-card {
   width: 100%;
   margin-bottom: 12px;
@@ -474,6 +702,7 @@ button.spawn-marker {
   }
 
   .filters-panel,
+  .nightlords-panel,
   .patterns-panel,
   .map-panel {
     min-height: auto;
@@ -482,4 +711,5 @@ button.spawn-marker {
   .map-panel {
     min-height: 72vh;
   }
+
 }

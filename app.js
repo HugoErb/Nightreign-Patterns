@@ -5,12 +5,18 @@ import {
   isSpawnPointAvailableForMapType,
   patternEventDisplay,
   patternMatchesFilters,
+  bossNegationGroups,
+  bossResistances,
+  bossTypeName,
+  effectIconUrl,
+  formatPartyValues,
   updatePatternCardSelection,
   spawnMarkerPosition,
 } from './logic.js';
 
 const DATA_FILES = {
   nightlords: 'src/assets/data/nightlords.json',
+  nightlordBosses: 'src/assets/data/nightlord-bosses.json',
   mapTypes: 'src/assets/data/map-types.json',
   spawnPoints: 'src/assets/data/spawn-points.json',
   events: 'src/assets/data/events.json',
@@ -30,6 +36,7 @@ const state = {
   offsetY: 0,
   dragging: false,
   dragStart: { x: 0, y: 0, offsetX: 0, offsetY: 0 },
+  nightlordsPanelVisible: true,
 };
 
 const els = {};
@@ -43,6 +50,7 @@ async function init() {
   try {
     state.data = await loadData();
     populateFilters();
+    renderNightlordCompendium();
     renderAll();
   } catch {
     document.body.innerHTML = '<div class="load-error">Impossible de charger les fichiers JSON locaux.</div>';
@@ -51,6 +59,7 @@ async function init() {
 
 function bindElements() {
   Object.assign(els, {
+    appShell: document.getElementById('app-shell'),
     resultCount: document.getElementById('result-count'),
     patternCount: document.getElementById('pattern-count'),
     nightlordSelect: document.getElementById('nightlord-select'),
@@ -68,6 +77,9 @@ function bindElements() {
     mapImage: document.getElementById('map-image'),
     spawnLayer: document.getElementById('spawn-layer'),
     patternList: document.getElementById('pattern-list'),
+    nightlordsPanel: document.querySelector('.nightlords-panel'),
+    nightlordsPanelToggle: document.getElementById('nightlords-panel-toggle'),
+    nightlordCompendiumList: document.getElementById('nightlord-compendium-list'),
     zoomIn: document.getElementById('zoom-in'),
     zoomOut: document.getElementById('zoom-out'),
     resetView: document.getElementById('reset-view'),
@@ -76,6 +88,11 @@ function bindElements() {
 
 function bindStaticEvents() {
   els.nightlordButton.addEventListener('click', () => setNightlordMenuOpen(els.nightlordMenu.hidden));
+
+  els.nightlordsPanelToggle.addEventListener('click', () => {
+    state.nightlordsPanelVisible = !state.nightlordsPanelVisible;
+    renderNightlordsPanelVisibility();
+  });
 
   document.addEventListener('click', (event) => {
     if (!els.nightlordSelect.contains(event.target)) {
@@ -181,6 +198,8 @@ function renderAll() {
   renderNightlordSelection();
   renderSpawnOptions();
   renderMap();
+  renderNightlordCompendium();
+  renderNightlordsPanelVisibility();
   renderPatterns();
 }
 
@@ -323,6 +342,85 @@ function createPatternCard(pattern) {
     updatePatternCardSelection(els.patternList, state.displayedPattern);
   });
   return card;
+}
+
+function renderNightlordCompendium() {
+  const bosses = state.filters.nightlordId
+    ? state.data.nightlordBosses.filter((boss) => boss.nightlordId === state.filters.nightlordId)
+    : state.data.nightlordBosses;
+  els.nightlordCompendiumList.replaceChildren(...bosses.map(createNightlordBossCard));
+}
+
+function renderNightlordsPanelVisibility() {
+  els.appShell.classList.toggle('nightlords-hidden', !state.nightlordsPanelVisible);
+  els.nightlordsPanel.hidden = !state.nightlordsPanelVisible;
+  els.nightlordsPanelToggle.textContent = state.nightlordsPanelVisible
+    ? 'Masquer Nightlords Compendium'
+    : 'Afficher Nightlords Compendium';
+  els.nightlordsPanelToggle.setAttribute('aria-pressed', String(state.nightlordsPanelVisible));
+}
+
+function createNightlordBossCard(boss) {
+  const nightlord = nightlordById(boss.nightlordId);
+  const card = document.createElement('details');
+  card.className = 'nightlord-boss-card';
+  card.open = state.filters.nightlordId === boss.nightlordId;
+  card.innerHTML = `
+    <summary class="nightlord-boss-header">
+      <img src="${assetUrl(nightlord?.imageUrl)}" alt="">
+      <div>
+        <h3>${escapeHtml(boss.name)}</h3>
+      </div>
+    </summary>
+    <div class="nightlord-boss-variants">
+      ${boss.npcs.map((npc) => nightlordNpcHtml(boss, npc)).join('')}
+    </div>
+  `;
+  return card;
+}
+
+function nightlordNpcHtml(boss, npc) {
+  const negations = bossNegationGroups(npc);
+  const resistances = bossResistances(npc);
+  return `
+    <section class="nightlord-npc-card${npc.type === 8 ? ' everdark' : ''}">
+      <div class="nightlord-npc-top">
+        <span>${escapeHtml(bossTypeName(npc.type))}</span>
+      </div>
+      ${statGroupHtml('Weak Against', negations.weakAgainst, 'weak')}
+      ${statGroupHtml('Strong Against', negations.strongAgainst, 'strong')}
+      ${statGroupHtml('Resistances', resistances, 'resistance')}
+      <div class="nightlord-meta-grid">
+        <div><span>HP</span><b>${escapeHtml(formatPartyValues(npc.hp))}</b></div>
+      </div>
+    </section>
+  `;
+}
+
+function statGroupHtml(title, items, variant) {
+  const emptyLabel = variant === 'weak'
+    ? 'No weaknesses'
+    : 'No resistances';
+  return `
+    <div class="nightlord-stat-group">
+      <span>${escapeHtml(title)}</span>
+      <div class="nightlord-stat-list">
+        ${items.length ? items.map((item) => statPillHtml(item, variant)).join('') : `<em>${emptyLabel}</em>`}
+      </div>
+    </div>
+  `;
+}
+
+function statPillHtml(item, variant) {
+  const value = variant === 'resistance' ? item.value : `${item.value}%`;
+  const iconUrl = effectIconUrl(item.id);
+  return `
+    <div class="nightlord-stat-pill ${variant}${value === 'Immune' ? ' immune' : ''}">
+      ${iconUrl ? `<img src="${escapeHtml(iconUrl)}" alt="">` : ''}
+      <span>${escapeHtml(item.name)}</span>
+      <b>${escapeHtml(value)}</b>
+    </div>
+  `;
 }
 
 function selectNightlord(nightlordId) {
