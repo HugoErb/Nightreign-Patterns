@@ -394,7 +394,7 @@ select {
   border: 0;
   background: transparent;
   padding: 0;
-  transform: translate(-50%, -50%) scale(var(--spawn-marker-scale, 1));
+  transform: translate(-50%, -50%);
 }
 
 button.spawn-marker {

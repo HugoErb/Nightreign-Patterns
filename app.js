@@ -23,6 +23,8 @@ const DATA_FILES = {
   patterns: 'src/assets/data/patterns.json',
 };
 
+const MAP_FIT_PADDING_PX = 2;
+
 const state = {
   data: null,
   filters: {
@@ -52,6 +54,7 @@ async function init() {
     populateFilters();
     renderNightlordCompendium();
     renderAll();
+    fitMapWhenImageIsReady();
   } catch {
     document.body.innerHTML = '<div class="load-error">Unable to load local JSON files.</div>';
   }
@@ -153,10 +156,7 @@ function bindStaticEvents() {
   });
 
   els.resetView.addEventListener('click', () => {
-    state.zoom = 0.86;
-    state.offsetX = 0;
-    state.offsetY = 0;
-    updateMapTransform();
+    fitMapToViewport();
   });
 
   els.mapViewport.addEventListener('wheel', (event) => {
@@ -450,6 +450,8 @@ function setNightlordMenuOpen(open) {
 
 function fitMapToViewport() {
   const viewport = els.mapViewport.getBoundingClientRect();
+  const availableWidth = Math.max(0, viewport.width - MAP_FIT_PADDING_PX);
+  const availableHeight = Math.max(0, viewport.height - MAP_FIT_PADDING_PX);
   const stageWidth = els.mapStage.offsetWidth;
   const imageRatio = els.mapImage.naturalWidth && els.mapImage.naturalHeight
     ? els.mapImage.naturalHeight / els.mapImage.naturalWidth
@@ -464,7 +466,7 @@ function fitMapToViewport() {
     4,
     Math.max(
       0.2,
-      Math.min((viewport.width * 0.94) / stageWidth, (viewport.height * 0.94) / stageHeight),
+      Math.min(availableWidth / stageWidth, availableHeight / stageHeight),
     ),
   ));
   state.offsetX = 0;
@@ -474,7 +476,15 @@ function fitMapToViewport() {
 
 function updateMapTransform() {
   els.mapStage.style.transform = `translate(-50%, -50%) translate(${state.offsetX}px, ${state.offsetY}px) scale(${state.zoom})`;
-  els.mapStage.style.setProperty('--spawn-marker-scale', String(1 / state.zoom));
+}
+
+function fitMapWhenImageIsReady() {
+  if (els.mapImage.complete) {
+    requestAnimationFrame(fitMapToViewport);
+    return;
+  }
+
+  els.mapImage.addEventListener('load', () => requestAnimationFrame(fitMapToViewport), { once: true });
 }
 
 function option(value, label) {
