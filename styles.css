@@ -21,7 +21,7 @@ select {
 
 .app-shell {
   display: grid;
-  grid-template-columns: 280px minmax(0, 1fr) 420px minmax(260px, max-content);
+  grid-template-columns: 280px minmax(0, 1fr) 420px;
   height: 100vh;
   min-height: 0;
   overflow: hidden;
@@ -29,7 +29,7 @@ select {
 }
 
 .app-shell.nightlords-collapsed {
-  grid-template-columns: 280px minmax(0, 1fr) 76px minmax(260px, max-content);
+  grid-template-columns: 280px minmax(0, 1fr) 76px;
 }
 
 .filters-panel,
@@ -41,17 +41,34 @@ select {
 }
 
 .filters-panel {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
   border-right: 1px solid #27272a;
   padding: 16px;
 }
 
 .patterns-panel {
   display: flex;
-  width: max-content;
-  max-width: 320px;
+  width: calc(100% + 30px);
+  min-width: 0;
+  flex: 1 1 auto;
   flex-direction: column;
+  margin: 16px -14px -16px -16px;
   overflow: hidden;
-  border-left: 1px solid #27272a;
+  border-top: 1px solid #27272a;
+}
+
+.patterns-header.panel-header.compact {
+  flex: 0 0 auto;
+  border-bottom: 0;
+  min-height: 0;
+  padding-bottom: 4px;
+}
+
+.patterns-count {
+  display: block;
+  margin: 0;
 }
 
 .nightlords-panel {
@@ -454,9 +471,32 @@ button.spawn-marker {
 }
 
 .pattern-list {
+  flex: 1 1 0;
   min-height: 0;
   overflow: auto;
-  padding: 16px;
+  padding: 4px 0 16px 8px;
+  scrollbar-color: #a1a1aa transparent;
+  scrollbar-width: thin;
+}
+
+.pattern-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.pattern-list::-webkit-scrollbar-track,
+.pattern-list::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+.pattern-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #a1a1aa;
+}
+
+.pattern-list::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .nightlord-compendium-list {
@@ -698,7 +738,8 @@ button.spawn-marker {
 }
 
 .pattern-card {
-  width: 100%;
+  width: auto;
+  margin-right: 8px;
   margin-bottom: 12px;
   border: 1px solid #27272a;
   border-radius: 8px;
@@ -737,6 +778,7 @@ button.spawn-marker {
 .pattern-map-type,
 .pattern-spawn,
 .pattern-event {
+  display: block;
   overflow: hidden;
   color: #a1a1aa;
   font-size: 12px;
@@ -748,10 +790,6 @@ button.spawn-marker {
   margin-bottom: 8px;
   color: #f4f4f5;
   font-size: 14px;
-}
-
-.pattern-event {
-  color: #71717a;
 }
 
 .empty-message,

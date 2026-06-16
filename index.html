@@ -33,7 +33,7 @@
         <label class="field">
           <span class="field-title">
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7 3-5 2v12l5-2 6 2 5-2V3l-5 2-6-2Zm1.2 2.4 3.6 1.2v8l-3.6-1.2v-8Zm-4 1.1 2-.8v7.8l-2 .8V6.5Zm11.6 7-2 .8V6.5l2-.8v7.8Z"/></svg>
-            Map type
+            Shifting Earth
           </span>
           <span class="select-wrap">
             <select id="map-type-filter"></select>
@@ -58,6 +58,13 @@
         </section>
 
         <button class="reset-button" id="reset-button" type="button">Reset</button>
+
+        <aside class="patterns-panel">
+          <header class="patterns-header panel-header compact">
+            <p class="patterns-count"><span id="pattern-count">0</span> result(s)</p>
+          </header>
+          <div class="pattern-list" id="pattern-list"></div>
+        </aside>
       </aside>
 
       <section class="map-panel">
@@ -91,14 +98,6 @@
           </button>
         </header>
         <div class="nightlord-compendium-list" id="nightlord-compendium-list"></div>
-      </aside>
-
-      <aside class="patterns-panel">
-        <header class="panel-header compact">
-          <h2>Patterns</h2>
-          <p><span id="pattern-count">0</span> result(s)</p>
-        </header>
-        <div class="pattern-list" id="pattern-list"></div>
       </aside>
     </main>
 

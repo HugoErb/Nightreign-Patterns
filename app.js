@@ -329,26 +329,40 @@ function renderPatterns() {
 }
 
 function createPatternCard(pattern) {
-  const card = document.createElement('button');
+  const card = document.createElement('div');
   const selected = state.displayedPattern?.id === pattern.id && state.displayedPattern?.nightlordId === pattern.nightlordId;
-  card.type = 'button';
   card.className = `pattern-card${selected ? ' selected' : ''}`;
+  card.tabIndex = 0;
+  card.role = 'button';
   card.dataset.patternId = String(pattern.id);
   card.dataset.nightlordId = pattern.nightlordId;
   card.innerHTML = `
     <div class="pattern-card-top">
       <span class="pattern-id">#${escapeHtml(pattern.id)}</span>
-      <span class="pattern-map-type">${escapeHtml(mapTypeName(pattern.mapTypeId))}</span>
     </div>
     <div class="pattern-nightlord">${escapeHtml(nightlordDisplayName(pattern.nightlordId))}</div>
-    <div class="pattern-spawn">${escapeHtml(spawnName(pattern.spawnPointId) || 'Unknown spawn')}</div>
+    <div class="pattern-map-type">Shifting Earth: ${escapeHtml(mapTypeName(pattern.mapTypeId))}</div>
+    <div class="pattern-spawn">Spawn: ${escapeHtml(spawnName(pattern.spawnPointId) || 'Unknown spawn')}</div>
     <div class="pattern-event">${escapeHtml(eventNames(pattern.eventIds).join(', ') || 'No event')}</div>
   `;
-  card.querySelector('.pattern-event').textContent = patternEventDisplay(pattern, eventNames(pattern.eventIds));
-  card.addEventListener('click', () => {
+  card.querySelector('.pattern-event').textContent = `Event: ${patternEventDisplay(pattern, eventNames(pattern.eventIds))}`;
+  const selectPattern = () => {
     state.displayedPattern = pattern;
     renderMap();
     updatePatternCardSelection(els.patternList, state.displayedPattern);
+  };
+  card.addEventListener('click', (event) => {
+    if (event.target.closest('a')) {
+      return;
+    }
+    selectPattern();
+  });
+  card.addEventListener('keydown', (event) => {
+    if (event.key !== 'Enter' && event.key !== ' ') {
+      return;
+    }
+    event.preventDefault();
+    selectPattern();
   });
   return card;
 }
